@@ -1,4 +1,7 @@
 # Build a Hex-Based Planet Generator Engine in Unity & Blender
+<p align="center">
+  <img width="750" height="422" alt="Course Image" src="https://github.com/user-attachments/assets/752bda0a-caf3-4857-bb28-6a88d1d7a154" />
+</p>
 
 Build a reusable procedural world generation framework for spherical, hex-based planets using **Unity**, **Blender**, and **C#**.
 
