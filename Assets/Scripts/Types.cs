@@ -17,6 +17,15 @@ public class CellData {
 }
 
 [System.Serializable]
-public class Island {
+public class Region {
 	public List<CellData> frontier = new List<CellData>();
+}
+
+[System.Serializable]
+public class TerrainRule {
+	public string displayName;
+	public TerrainType from;
+	public TerrainType to;
+	[Range(0.01f, 0.99f)] public float coverage;
+	public Vector2Int seedRange;
 }
