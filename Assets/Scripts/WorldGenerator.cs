@@ -7,6 +7,7 @@ using UnityEngine.SceneManagement;
 public class WorldGenerator : MonoBehaviour {
 
     [SerializeField] Material[] terrainMaterials;
+    [SerializeField] TerrainAsset[] terrainAssets;
     [SerializeField] List<CellData> cells = new List<CellData>();
     [Range(0, 20)] [SerializeField] int generationSpeed;
     [SerializeField] List<TerrainRule> rules = new List<TerrainRule>();
@@ -26,8 +27,27 @@ public class WorldGenerator : MonoBehaviour {
             List<CellData> seeds = CreateSeeds(rule);
             yield return GrowTerrain(rule, seeds);
         }
+        // set assets
+        foreach(CellData cell in cells) {
+            foreach(TerrainRule rule in rules) {
+                if(cell.type == rule.to) {
+                    float roll = Random.Range(0.01f, 0.99f);
+                    TerrainAsset terrainAsset = terrainAssets[(int)rule.to];
+                    if(roll <= terrainAsset.assetChance) {
+                        // asset placement
+                        int assetIndex = Random.Range(0, terrainAsset.assets.Length);
+                        GameObject prefab = terrainAsset.assets[assetIndex];
+                        Vector3 pos = cell.root.position;
+                        float yAxis = Random.Range(0, 360f);
+                        Quaternion offset = Quaternion.Euler(0, yAxis, 0);
+                        Quaternion rot = cell.root.rotation * offset;
+                        GameObject goAsset = Instantiate(prefab, pos, rot, cell.root);
+                        goAsset.name = prefab.name;
+                    }
+                }
+            }
+        }
     }
-
 
     List<CellData> CreateSeeds(TerrainRule rule) {
         List<CellData> seeds = new List<CellData>();

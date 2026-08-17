@@ -29,3 +29,11 @@ public class TerrainRule {
 	[Range(0.01f, 0.99f)] public float coverage;
 	public Vector2Int seedRange;
 }
+
+[System.Serializable]
+public class TerrainAsset {
+	public string displayName;
+	public Material material;
+	public GameObject[] assets;
+	[Range(0.01f, 0.99f)] public float assetChance = 0.1f;
+}
