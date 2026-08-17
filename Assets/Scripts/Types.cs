@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 [System.Serializable]
@@ -6,6 +7,7 @@ public class CellData {
 	public Transform root;
 	public MeshFilter meshFilter;
 	public MeshRenderer meshRenderer;
+	public List<int> neighbors = new List<int>();
 	public CellData(TerrainType type, Transform root, MeshFilter meshFilter, MeshRenderer meshRenderer) {
 		this.type = type;
 		this.root = root;
