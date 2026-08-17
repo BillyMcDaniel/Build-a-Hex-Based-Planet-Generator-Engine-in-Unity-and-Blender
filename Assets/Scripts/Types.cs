@@ -5,6 +5,7 @@ using UnityEngine;
 public class CellData {
 	public TerrainType type;
 	public Transform root;
+	public Transform outline;
 	public MeshFilter meshFilter;
 	public MeshRenderer meshRenderer;
 	public List<int> neighbors = new List<int>();

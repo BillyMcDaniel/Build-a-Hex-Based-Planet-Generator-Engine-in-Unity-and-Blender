@@ -6,11 +6,12 @@ using UnityEngine.SceneManagement;
 
 public class WorldGenerator : MonoBehaviour {
 
-    [SerializeField] Material[] terrainMaterials;
     [SerializeField] TerrainAsset[] terrainAssets;
-    [SerializeField] List<CellData> cells = new List<CellData>();
+    public List<CellData> cells = new List<CellData>();
     [Range(0, 20)] [SerializeField] int generationSpeed;
     [SerializeField] List<TerrainRule> rules = new List<TerrainRule>();
+
+    bool isOutlined = true;
 
     void Start() {
         StartCoroutine(GenerateWorld());
@@ -19,6 +20,12 @@ public class WorldGenerator : MonoBehaviour {
     void Update() {
         if(Keyboard.current.spaceKey.wasPressedThisFrame) {
             SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+        }
+        if(Keyboard.current.f1Key.wasPressedThisFrame) {
+            isOutlined = !isOutlined;
+            foreach(CellData cell in cells) {
+                cell.outline.gameObject.SetActive(isOutlined);
+            }
         }
     }
 
@@ -61,7 +68,7 @@ public class WorldGenerator : MonoBehaviour {
                 seeds.Add(cell);
                 int terrainIndex = (int)rule.to;
                 cell.type = rule.to;
-                cell.meshRenderer.material = terrainMaterials[terrainIndex];
+                cell.meshRenderer.material = terrainAssets[terrainIndex].material;
             }
         }
         return seeds;
@@ -107,7 +114,7 @@ public class WorldGenerator : MonoBehaviour {
         CellData newCell = candidates[candidateIndex];
         newCell.type = rule.to;
         int terrainIndex = (int)rule.to;
-        newCell.meshRenderer.material = terrainMaterials[terrainIndex];
+        newCell.meshRenderer.material = terrainAssets[terrainIndex].material;
         region.frontier.Add(newCell);
         return true;
     }
