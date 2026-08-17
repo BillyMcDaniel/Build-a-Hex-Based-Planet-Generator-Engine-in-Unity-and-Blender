@@ -1,0 +1,19 @@
+root = true
+
+[*.cs]
+indent_style = tab
+indent_size = 4
+
+# --- Keep opening brace on same line (K&R style) ---
+csharp_new_line_before_open_brace = none
+
+# --- Optional: put else/catch/finally on new line ---
+csharp_new_line_before_else = true
+csharp_new_line_before_catch = true
+csharp_new_line_before_finally = true
+
+# --- No spaces after if/for/while ---
+csharp_space_after_keywords_in_control_flow_statements = false
+
+# --- Space around operators (a + b = c) ---
+csharp_space_around_binary_operators = before_and_after
