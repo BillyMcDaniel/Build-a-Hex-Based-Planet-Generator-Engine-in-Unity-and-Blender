@@ -15,3 +15,8 @@ public class CellData {
 		this.meshRenderer = meshRenderer;
 	}
 }
+
+[System.Serializable]
+public class Island {
+	public List<CellData> frontier = new List<CellData>();
+}
