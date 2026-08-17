@@ -1,5 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
+using UnityEngine.SceneManagement;
 
 public class WorldGenerator : MonoBehaviour {
 
@@ -12,6 +14,12 @@ public class WorldGenerator : MonoBehaviour {
     void Start() {
         SetSeeds();
         GrowIslands();
+    }
+
+    void Update() {
+        if(Keyboard.current.spaceKey.wasPressedThisFrame) {
+            SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+        }
     }
 
     void SetSeeds() {
