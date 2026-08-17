@@ -1,3 +1,4 @@
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -8,12 +9,13 @@ public class WorldGenerator : MonoBehaviour {
     [SerializeField] Material[] terrainMaterials;
     [SerializeField] List<CellData> cells = new List<CellData>();
     [SerializeField] float targetLandRatio = 0.29f;
+    [Range(0, 20)] [SerializeField] int generationSpeed;
 
     List<CellData> seeds = new List<CellData>();
 
     void Start() {
         SetSeeds();
-        GrowIslands();
+        StartCoroutine(GrowIslands());
     }
 
     void Update() {
@@ -36,14 +38,21 @@ public class WorldGenerator : MonoBehaviour {
         }
     }
 
-    void GrowIslands() {
+    IEnumerator GrowIslands() {
         int landMax = Mathf.RoundToInt(cells.Count * targetLandRatio);
         int landCount = seeds.Count;
         List<Island> islands = CreateIslands();
         while(landCount < landMax && islands.Count > 0) {
             for(int islandIndex = islands.Count - 1; islandIndex >= 0; islandIndex--) {
                 Island island = islands[islandIndex];
-                if(GrowIsland(island)) { landCount++; }
+                if(GrowIsland(island)) {
+                    landCount++;
+                    if(generationSpeed > 0) {
+                        if(landCount % generationSpeed == 0) {
+                            yield return null;
+                        }
+                    }
+                }
                 if(island.frontier.Count == 0) { islands.RemoveAt(islandIndex); }
                 if(landCount >= landMax) { break; }
             }
